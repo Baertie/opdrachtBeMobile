@@ -22,14 +22,11 @@ export default {
         .get('https://data.stad.gent/api/records/1.0/search/?dataset=real-time-bezettingen-fietsenstallingen-gent&q=&facet=facilityname')
         .then(response => {
           this.info = response.data
-          console.log(response.data)
         })
         .catch(error => {
           console.log(error)
           this.errored = true
         })
-    },
-    makeMap: () => {
       mapboxgl.accessToken = 'pk.eyJ1IjoiYmFlcnRpZSIsImEiOiJja211b2YzenUweDRvMnFtd3VkNm9ya2tjIn0.Id8ek32Tab0LJvRYIemcsw'
 
       // eslint-disable-next-line no-new
@@ -47,12 +44,14 @@ export default {
           new mapboxgl.Marker().setLngLat(record.geometry.coordinates).setPopup(new mapboxgl.Popup().setText(`Plaats: ${record.fields.facilityname} Totaal aantal plaatsen: ${record.fields.totalplaces} Aantal vrije plaatsen: ${record.fields.freeplaces}`)).addTo(map)
         )
       })
+    },
+    makeMap: () => {
     }
   },
   mounted () {
-    this.interval = setInterval(this.getData(), 10000)
+    this.interval = setInterval(this.getData, 60000)
     this.getData()
-    this.makeMap()
+    // this.makeMap()
   },
   beforeUnmount () {
     clearInterval(this.interval)
