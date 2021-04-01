@@ -3,6 +3,7 @@
 </template>
 
 <script>
+// import Vue from 'vue'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import axios from 'axios'
@@ -44,14 +45,11 @@ export default {
           new mapboxgl.Marker().setLngLat(record.geometry.coordinates).setPopup(new mapboxgl.Popup().setText(`Plaats: ${record.fields.facilityname} Totaal aantal plaatsen: ${record.fields.totalplaces} Aantal vrije plaatsen: ${record.fields.freeplaces}`)).addTo(map)
         )
       })
-    },
-    makeMap: () => {
     }
   },
   mounted () {
     this.interval = setInterval(this.getData, 60000)
     this.getData()
-    // this.makeMap()
   },
   beforeUnmount () {
     clearInterval(this.interval)
